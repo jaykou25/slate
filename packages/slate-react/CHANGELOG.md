@@ -1,5 +1,10 @@
 # slate-react
 
+## 0.79.1
+
+- 去掉 slate peerDependency 依赖
+- 规范 type 的输出
+
 ## 0.79.0
 
 ### Minor Changes

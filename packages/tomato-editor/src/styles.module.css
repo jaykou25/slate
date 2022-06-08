@@ -1,0 +1,23 @@
+.docContainer {
+  position: relative;
+  padding: 20px 150px 20px 120px;
+  height: 100%;
+}
+
+.blockOperator {
+  position: absolute;
+  display: none;
+  /* y方向的偏移是元素自身的一半(22/2), 同时再往下降一个像素用于视觉调整(因为文字的中心实际上是在中心偏下的) */
+  transform: translate(calc(-100% - 4px), -10px);
+  color: --gray-300;
+  cursor: pointer;
+  font-size: 0;
+}
+
+.blockOperator:hover {
+  color: --blue-700;
+}
+
+.blockOperatorVisible {
+  display: block;
+}

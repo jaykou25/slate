@@ -1,0 +1,44 @@
+{
+  "name": "@jay.kou/tomato-editor",
+  "version": "0.1.4",
+  "author": "gaojie <jay.kou@qq.com>",
+  "homepage": "https://github.com/jaykou25/slate#readme",
+  "license": "ISC",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "./dist/tomato-editor.umd.js",
+  "module": "./dist/tomato-editor.es.js",
+  "typings": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/tomato-editor.es.js",
+      "require": "./dist/tomato-editor.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "rm -rf dist/* && tsc && vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "publish": "npm publish"
+  },
+  "bugs": {
+    "url": "https://github.com/jaykou25/slate/issues"
+  },
+  "dependencies": {
+    "@jay.kou/slate": "^0.78.1",
+    "@jay.kou/slate-react": "^0.79.0",
+    "@jay.kou/tomato-editor-design": "^0.0.6"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^1.3.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "typescript": "^4.6.3",
+    "vite": "^2.9.9"
+  }
+}
