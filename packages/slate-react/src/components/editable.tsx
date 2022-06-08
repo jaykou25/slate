@@ -124,7 +124,7 @@ export const Editable = (props: EditableProps) => {
     readOnly = false,
     renderElement,
     renderLeaf,
-    renderPlaceholder = props => <DefaultPlaceholder {...props} />,
+    renderPlaceholder = (props) => <DefaultPlaceholder {...props} />,
     scrollSelectionIntoView = defaultScrollSelectionIntoView,
     style = {},
     as: Component = 'div',
@@ -600,9 +600,7 @@ export const Editable = (props: EditableProps) => {
     }
   }, [scheduleOnDOMSelectionChange])
 
-  const decorations = [...Node.nodes(editor)].flatMap(([n, p]) =>
-    decorate([n, p])
-  )
+  const decorations = decorate([editor, []])
 
   if (
     placeholder &&
@@ -789,7 +787,7 @@ export const Editable = (props: EditableProps) => {
                   let blockPath = path
                   if (!Editor.isBlock(editor, node)) {
                     const block = Editor.above(editor, {
-                      match: n => Editor.isBlock(editor, n),
+                      match: (n) => Editor.isBlock(editor, n),
                       at: path,
                     })
 
@@ -896,7 +894,7 @@ export const Editable = (props: EditableProps) => {
                     return
                   }
                   const inline = Editor.above(editor, {
-                    match: n => Editor.isInline(editor, n),
+                    match: (n) => Editor.isInline(editor, n),
                     mode: 'highest',
                   })
                   if (inline) {

@@ -1,4 +1,13 @@
-import { Editor, Node, Path, Point, Range, Transforms, BaseEditor } from 'slate'
+import {
+  BaseEditor,
+  Editor,
+  Node,
+  Path,
+  Point,
+  Range,
+  Scrubber,
+  Transforms,
+} from 'slate'
 
 import { Key } from '../utils/key'
 import {
@@ -108,7 +117,7 @@ export const ReactEditor = {
     }
 
     throw new Error(
-      `Unable to find the path for Slate node: ${JSON.stringify(node)}`
+      `Unable to find the path for Slate node: ${Scrubber.stringify(node)}`
     )
   },
 
@@ -211,9 +220,9 @@ export const ReactEditor = {
     // stepper arrow on a number input). (2018/05/04)
     // https://github.com/ianstormtaylor/slate/issues/1819
     try {
-      targetEl = (isDOMElement(target)
-        ? target
-        : target.parentElement) as HTMLElement
+      targetEl = (
+        isDOMElement(target) ? target : target.parentElement
+      ) as HTMLElement
     } catch (err) {
       if (
         !err.message.includes('Permission denied to access property "nodeType"')
@@ -285,7 +294,7 @@ export const ReactEditor = {
 
     if (!domNode) {
       throw new Error(
-        `Cannot resolve a DOM node from Slate node: ${JSON.stringify(node)}`
+        `Cannot resolve a DOM node from Slate node: ${Scrubber.stringify(node)}`
       )
     }
 
@@ -337,7 +346,9 @@ export const ReactEditor = {
 
     if (!domPoint) {
       throw new Error(
-        `Cannot resolve a DOM point from Slate point: ${JSON.stringify(point)}`
+        `Cannot resolve a DOM point from Slate point: ${Scrubber.stringify(
+          point
+        )}`
       )
     }
 
@@ -369,13 +380,13 @@ export const ReactEditor = {
     // A slate Point at zero-width Leaf always has an offset of 0 but a native DOM selection at
     // zero-width node has an offset of 1 so we have to check if we are in a zero-width node and
     // adjust the offset accordingly.
-    const startEl = (isDOMElement(startNode)
-      ? startNode
-      : startNode.parentElement) as HTMLElement
+    const startEl = (
+      isDOMElement(startNode) ? startNode : startNode.parentElement
+    ) as HTMLElement
     const isStartAtZeroWidth = !!startEl.getAttribute('data-slate-zero-width')
-    const endEl = (isDOMElement(endNode)
-      ? endNode
-      : endNode.parentElement) as HTMLElement
+    const endEl = (
+      isDOMElement(endNode) ? endNode : endNode.parentElement
+    ) as HTMLElement
     const isEndAtZeroWidth = !!endEl.getAttribute('data-slate-zero-width')
 
     domRange.setStart(startNode, isStartAtZeroWidth ? 1 : startOffset)
@@ -527,7 +538,7 @@ export const ReactEditor = {
             ),
           ]
 
-          removals.forEach(el => {
+          removals.forEach((el) => {
             el!.parentNode!.removeChild(el)
           })
 
@@ -551,7 +562,7 @@ export const ReactEditor = {
           textNode = leafNode.closest('[data-slate-node="text"]')!
           domNode = leafNode
           offset = domNode.textContent!.length
-          domNode.querySelectorAll('[data-slate-zero-width]').forEach(el => {
+          domNode.querySelectorAll('[data-slate-zero-width]').forEach((el) => {
             offset -= el.textContent!.length
           })
         }
@@ -684,7 +695,7 @@ export const ReactEditor = {
       range = Editor.unhangRange(editor, range, { voids: true })
     }
 
-    return (range as unknown) as T extends true ? Range | null : Range
+    return range as unknown as T extends true ? Range | null : Range
   },
 
   hasRange(editor: ReactEditor, range: Range): boolean {

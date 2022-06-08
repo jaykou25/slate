@@ -516,7 +516,7 @@ export const Editor: EditorInterface = {
    */
 
   hasBlocks(editor: Editor, element: Element): boolean {
-    return element.children.some(n => Editor.isBlock(editor, n))
+    return element.children.some((n) => Editor.isBlock(editor, n))
   },
 
   /**
@@ -525,7 +525,7 @@ export const Editor: EditorInterface = {
 
   hasInlines(editor: Editor, element: Element): boolean {
     return element.children.some(
-      n => Text.isText(n) || Editor.isInline(editor, n)
+      (n) => Text.isText(n) || Editor.isInline(editor, n)
     )
   },
 
@@ -534,7 +534,7 @@ export const Editor: EditorInterface = {
    */
 
   hasTexts(editor: Editor, element: Element): boolean {
-    return element.children.every(n => Text.isText(n))
+    return element.children.every((n) => Text.isText(n))
   },
 
   /**
@@ -799,7 +799,7 @@ export const Editor: EditorInterface = {
     if (anchor.offset === 0) {
       const prev = Editor.previous(editor, { at: path, match: Text.isText })
       const block = Editor.above(editor, {
-        match: n => Editor.isBlock(editor, n),
+        match: (n) => Editor.isBlock(editor, n),
       })
 
       if (prev && block) {
@@ -846,7 +846,7 @@ export const Editor: EditorInterface = {
     if (match == null) {
       if (Path.isPath(at)) {
         const [parent] = Editor.parent(editor, at)
-        match = n => parent.children.includes(n)
+        match = (n) => parent.children.includes(n)
       } else {
         match = () => true
       }
@@ -1000,7 +1000,7 @@ export const Editor: EditorInterface = {
 
     if (force) {
       const allPaths = Array.from(Node.nodes(editor), ([, p]) => p)
-      const allPathKeys = new Set(allPaths.map(p => p.join(',')))
+      const allPathKeys = new Set(allPaths.map((p) => p.join(',')))
       DIRTY_PATHS.set(editor, allPaths)
       DIRTY_PATH_KEYS.set(editor, allPathKeys)
     }
@@ -1306,9 +1306,6 @@ export const Editor: EditorInterface = {
         // then we will iterate over their content.
         if (!voids && editor.isVoid(node)) {
           yield Editor.start(editor, path)
-          // It's possible the start of the range we're iterating over is in a void, in which case
-          // we want to make sure we don't incorrectly yield the start of a subsequent text node for unit !== 'offset'
-          isNewBlock = false
           continue
         }
 
@@ -1462,7 +1459,7 @@ export const Editor: EditorInterface = {
     if (match == null) {
       if (Path.isPath(at)) {
         const [parent] = Editor.parent(editor, at)
-        match = n => parent.children.includes(n)
+        match = (n) => parent.children.includes(n)
       } else {
         match = () => true
       }
@@ -1623,7 +1620,7 @@ export const Editor: EditorInterface = {
 
     const endBlock = Editor.above(editor, {
       at: end,
-      match: n => Editor.isBlock(editor, n),
+      match: (n) => Editor.isBlock(editor, n),
     })
     const blockPath = endBlock ? endBlock[1] : []
     const first = Editor.start(editor, start)
@@ -1660,7 +1657,7 @@ export const Editor: EditorInterface = {
   ): NodeEntry<Element> | undefined {
     return Editor.above(editor, {
       ...options,
-      match: n => Editor.isVoid(editor, n),
+      match: (n) => Editor.isVoid(editor, n),
     })
   },
 

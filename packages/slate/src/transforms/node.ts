@@ -1,15 +1,16 @@
 import {
+  Ancestor,
   Editor,
   Element,
   Location,
   Node,
+  NodeEntry,
   Path,
   Point,
   Range,
+  Scrubber,
   Text,
   Transforms,
-  NodeEntry,
-  Ancestor,
 } from '..'
 import { NodeMatch, PropsCompare, PropsMerge } from '../interfaces/editor'
 import { PointRef } from '../interfaces/point-ref'
@@ -194,11 +195,11 @@ export const NodeTransforms: NodeTransforms = {
       if (Point.isPoint(at)) {
         if (match == null) {
           if (Text.isText(node)) {
-            match = n => Text.isText(n)
+            match = (n) => Text.isText(n)
           } else if (editor.isInline(node)) {
-            match = n => Text.isText(n) || Editor.isInline(editor, n)
+            match = (n) => Text.isText(n) || Editor.isInline(editor, n)
           } else {
-            match = n => Editor.isBlock(editor, n)
+            match = (n) => Editor.isBlock(editor, n)
           }
         }
 
@@ -267,7 +268,7 @@ export const NodeTransforms: NodeTransforms = {
       if (match == null) {
         match = Path.isPath(at)
           ? matchPath(editor, at)
-          : n => Editor.isBlock(editor, n)
+          : (n) => Editor.isBlock(editor, n)
       }
 
       if (!at) {
@@ -336,9 +337,9 @@ export const NodeTransforms: NodeTransforms = {
       if (match == null) {
         if (Path.isPath(at)) {
           const [parent] = Editor.parent(editor, at)
-          match = n => parent.children.includes(n)
+          match = (n) => parent.children.includes(n)
         } else {
-          match = n => Editor.isBlock(editor, n)
+          match = (n) => Editor.isBlock(editor, n)
         }
       }
 
@@ -387,7 +388,7 @@ export const NodeTransforms: NodeTransforms = {
       const emptyAncestor = Editor.above(editor, {
         at: path,
         mode: 'highest',
-        match: n => levels.includes(n) && hasSingleChildNest(editor, n),
+        match: (n) => levels.includes(n) && hasSingleChildNest(editor, n),
       })
 
       const emptyRef = emptyAncestor && Editor.pathRef(editor, emptyAncestor[1])
@@ -406,9 +407,9 @@ export const NodeTransforms: NodeTransforms = {
         properties = rest as Partial<Element>
       } else {
         throw new Error(
-          `Cannot merge the node at path [${path}] with the previous sibling because it is not the same kind: ${JSON.stringify(
+          `Cannot merge the node at path [${path}] with the previous sibling because it is not the same kind: ${Scrubber.stringify(
             node
-          )} ${JSON.stringify(prevNode)}`
+          )} ${Scrubber.stringify(prevNode)}`
         )
       }
 
@@ -481,7 +482,7 @@ export const NodeTransforms: NodeTransforms = {
       if (match == null) {
         match = Path.isPath(at)
           ? matchPath(editor, at)
-          : n => Editor.isBlock(editor, n)
+          : (n) => Editor.isBlock(editor, n)
       }
 
       const toRef = Editor.pathRef(editor, to)
@@ -537,7 +538,7 @@ export const NodeTransforms: NodeTransforms = {
       if (match == null) {
         match = Path.isPath(at)
           ? matchPath(editor, at)
-          : n => Editor.isBlock(editor, n)
+          : (n) => Editor.isBlock(editor, n)
       }
 
       if (!hanging && Range.isRange(at)) {
@@ -592,7 +593,7 @@ export const NodeTransforms: NodeTransforms = {
       if (match == null) {
         match = Path.isPath(at)
           ? matchPath(editor, at)
-          : n => Editor.isBlock(editor, n)
+          : (n) => Editor.isBlock(editor, n)
       }
 
       if (!hanging && Range.isRange(at)) {
@@ -704,7 +705,7 @@ export const NodeTransforms: NodeTransforms = {
       let { match, at = editor.selection, height = 0, always = false } = options
 
       if (match == null) {
-        match = n => Editor.isBlock(editor, n)
+        match = (n) => Editor.isBlock(editor, n)
       }
 
       if (Range.isRange(at)) {
@@ -717,7 +718,7 @@ export const NodeTransforms: NodeTransforms = {
         const path = at
         const point = Editor.point(editor, path)
         const [parent] = Editor.parent(editor, path)
-        match = n => n === parent
+        match = (n) => n === parent
         height = point.path.length - path.length + 1
         at = point
         always = true
@@ -866,7 +867,7 @@ export const NodeTransforms: NodeTransforms = {
       if (match == null) {
         match = Path.isPath(at)
           ? matchPath(editor, at)
-          : n => Editor.isBlock(editor, n)
+          : (n) => Editor.isBlock(editor, n)
       }
 
       if (Path.isPath(at)) {
@@ -894,7 +895,7 @@ export const NodeTransforms: NodeTransforms = {
 
         Transforms.liftNodes(editor, {
           at: range,
-          match: n => Element.isAncestor(node) && node.children.includes(n),
+          match: (n) => Element.isAncestor(node) && node.children.includes(n),
           voids,
         })
       }
@@ -933,9 +934,9 @@ export const NodeTransforms: NodeTransforms = {
         if (Path.isPath(at)) {
           match = matchPath(editor, at)
         } else if (editor.isInline(element)) {
-          match = n => Editor.isInline(editor, n) || Text.isText(n)
+          match = (n) => Editor.isInline(editor, n) || Text.isText(n)
         } else {
-          match = n => Editor.isBlock(editor, n)
+          match = (n) => Editor.isBlock(editor, n)
         }
       }
 
@@ -957,8 +958,8 @@ export const NodeTransforms: NodeTransforms = {
         Editor.nodes(editor, {
           at,
           match: editor.isInline(element)
-            ? n => Editor.isBlock(editor, n)
-            : n => Editor.isEditor(n),
+            ? (n) => Editor.isBlock(editor, n)
+            : (n) => Editor.isEditor(n),
           mode: 'lowest',
           voids,
         })
@@ -1002,7 +1003,7 @@ export const NodeTransforms: NodeTransforms = {
 
           Transforms.moveNodes(editor, {
             at: range,
-            match: n =>
+            match: (n) =>
               Element.isAncestor(commonNode) && commonNode.children.includes(n),
             to: wrapperPath.concat(0),
             voids,
@@ -1047,5 +1048,5 @@ const deleteRange = (editor: Editor, range: Range): Point | null => {
 
 const matchPath = (editor: Editor, path: Path): ((node: Node) => boolean) => {
   const [node] = Editor.node(editor, path)
-  return n => n === node
+  return (n) => n === node
 }

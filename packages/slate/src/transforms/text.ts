@@ -105,12 +105,12 @@ export const TextTransforms: TextTransforms = {
 
       let [start, end] = Range.edges(at)
       const startBlock = Editor.above(editor, {
-        match: n => Editor.isBlock(editor, n),
+        match: (n) => Editor.isBlock(editor, n),
         at: start,
         voids,
       })
       const endBlock = Editor.above(editor, {
-        match: n => Editor.isBlock(editor, n),
+        match: (n) => Editor.isBlock(editor, n),
         at: end,
         voids,
       })
@@ -267,7 +267,7 @@ export const TextTransforms: TextTransforms = {
       // instead since it will need to be split otherwise.
       const inlineElementMatch = Editor.above(editor, {
         at,
-        match: n => Editor.isInline(editor, n),
+        match: (n) => Editor.isInline(editor, n),
         mode: 'highest',
         voids,
       })
@@ -285,7 +285,7 @@ export const TextTransforms: TextTransforms = {
       }
 
       const blockMatch = Editor.above(editor, {
-        match: n => Editor.isBlock(editor, n),
+        match: (n) => Editor.isBlock(editor, n),
         at,
         voids,
       })!
@@ -361,7 +361,7 @@ export const TextTransforms: TextTransforms = {
 
       const [inlineMatch] = Editor.nodes(editor, {
         at,
-        match: n => Text.isText(n) || Editor.isInline(editor, n),
+        match: (n) => Text.isText(n) || Editor.isInline(editor, n),
         mode: 'highest',
         voids,
       })!
@@ -384,7 +384,7 @@ export const TextTransforms: TextTransforms = {
 
       Transforms.splitNodes(editor, {
         at,
-        match: n =>
+        match: (n) =>
           hasBlocks
             ? Editor.isBlock(editor, n)
             : Text.isText(n) || Editor.isInline(editor, n),
@@ -401,7 +401,7 @@ export const TextTransforms: TextTransforms = {
 
       Transforms.insertNodes(editor, starts, {
         at: startRef.current!,
-        match: n => Text.isText(n) || Editor.isInline(editor, n),
+        match: (n) => Text.isText(n) || Editor.isInline(editor, n),
         mode: 'highest',
         voids,
       })
@@ -412,14 +412,14 @@ export const TextTransforms: TextTransforms = {
 
       Transforms.insertNodes(editor, middles, {
         at: middleRef.current!,
-        match: n => Editor.isBlock(editor, n),
+        match: (n) => Editor.isBlock(editor, n),
         mode: 'lowest',
         voids,
       })
 
       Transforms.insertNodes(editor, ends, {
         at: endRef.current!,
-        match: n => Text.isText(n) || Editor.isInline(editor, n),
+        match: (n) => Text.isText(n) || Editor.isInline(editor, n),
         mode: 'highest',
         voids,
       })
@@ -474,9 +474,14 @@ export const TextTransforms: TextTransforms = {
           if (!voids && Editor.void(editor, { at: end })) {
             return
           }
-          const pointRef = Editor.pointRef(editor, end)
+          const start = Range.start(at)
+          const startRef = Editor.pointRef(editor, start)
+          const endRef = Editor.pointRef(editor, end)
           Transforms.delete(editor, { at, voids })
-          at = pointRef.unref()!
+          const startPoint = startRef.unref()
+          const endPoint = endRef.unref()
+
+          at = startPoint || endPoint!
           Transforms.setSelection(editor, { anchor: at, focus: at })
         }
       }
