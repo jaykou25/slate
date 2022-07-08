@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
-import { Editable } from '@jay.kou/slate-react'
+import { Component } from 'react'
+import { Range } from '@jay.kou/slate'
+import { Editable, ReactEditor, useSlateStatic } from '@jay.kou/slate-react'
 import { SlideCard } from '@jay.kou/tomato-editor-design'
 
 import styles from './styles.module.css'
 import MyElement from './components/myElement'
 import MyLeaf from './components/myLeaf'
 
-export default class EditorBody extends Component {
+class EditorBody extends Component<any, any> {
   constructor(props) {
     super(props)
 
@@ -17,11 +18,21 @@ export default class EditorBody extends Component {
   }
 
   handleMouseUp = () => {
-    this.setState({ toolbarVisible: true })
+    /**
+     * 如果光标被选中并且有选中的文字, 显示工具栏
+     */
+    const { editor } = this.props
+    const { selection } = editor
+    if (ReactEditor.isFocused(editor) && !Range.isCollapsed(selection)) {
+      const dom = ReactEditor.toDOMRange(editor, selection)
+      this.setState({ toolbarVisible: true, triggerDom: dom })
+    }
+
     document.removeEventListener('mouseup', this.handleMouseUp)
   }
 
   handleMouseDown = () => {
+    this.setState({ toolbarVisible: false })
     document.addEventListener('mouseup', this.handleMouseUp)
   }
 
@@ -32,23 +43,32 @@ export default class EditorBody extends Component {
       <div
         id="docContainer"
         className={styles.docContainer}
-        // onMouseDown={this.handleMouseDown}
+        onMouseDown={this.handleMouseDown}
       >
         <Editable
           placeholder="请输入内容"
           style={{ position: 'unset' }}
           renderElement={(attr) => <MyElement {...attr} />}
           renderLeaf={(attr) => <MyLeaf {...attr} />}
+          onBlur={() => {
+            this.setState({ toolbarVisible: false })
+          }}
         />
-
-        <button id="jay">id</button>
 
         <SlideCard
           visible={toolbarVisible}
           content={<div>hi</div>}
-          triggerDom={document.getElementById('jay')}
+          triggerDom={triggerDom}
+          offset={2}
         />
       </div>
     )
   }
 }
+
+function EditorBodyWrapper() {
+  const editor = useSlateStatic()
+  return <EditorBody editor={editor} />
+}
+
+export default EditorBodyWrapper

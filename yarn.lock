@@ -2333,7 +2333,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jay.kou/slate-react@^0.79.0, @jay.kou/slate-react@workspace:*, @jay.kou/slate-react@workspace:packages/slate-react":
+"@jay.kou/slate-react@npm:^0.79.0":
+  version: 0.79.1
+  resolution: "@jay.kou/slate-react@npm:0.79.1"
+  dependencies:
+    "@types/is-hotkey": ^0.1.1
+    "@types/lodash": ^4.14.149
+    direction: ^1.0.3
+    is-hotkey: ^0.1.6
+    is-plain-object: ^5.0.0
+    lodash: ^4.17.4
+    scroll-into-view-if-needed: ^2.2.20
+    tiny-invariant: 1.0.6
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 6b448ee4d14053a2f6d66876a9375996e16c2eb43564ca3a2e9e75955d1c64ab7a7d92cf90fc73464ff0bd6fb39b7eb34a6a30f3e2235c32edae313b3e76519a
+  languageName: node
+  linkType: hard
+
+"@jay.kou/slate-react@workspace:*, @jay.kou/slate-react@workspace:packages/slate-react":
   version: 0.0.0-use.local
   resolution: "@jay.kou/slate-react@workspace:packages/slate-react"
   dependencies:
@@ -2353,7 +2372,7 @@ __metadata:
     react-dom: ">=16.8.0"
     react-test-renderer: ">=16.8.0"
     scroll-into-view-if-needed: ^2.2.20
-    slate: ^0.78.0
+    slate: ^0.81.0
     slate-hyperscript: ^0.77.0
     source-map-loader: ^0.2.4
     tiny-invariant: 1.0.6
@@ -2363,7 +2382,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jay.kou/slate@^0.78.1, @jay.kou/slate@workspace:*, @jay.kou/slate@workspace:packages/slate":
+"@jay.kou/slate@npm:^0.78.1":
+  version: 0.78.1
+  resolution: "@jay.kou/slate@npm:0.78.1"
+  dependencies:
+    immer: ^9.0.6
+    is-plain-object: ^5.0.0
+    tiny-warning: ^1.0.3
+  checksum: 3f760a25eb10f0e1e363cfaecec6acc7d98376193ee35ec81338be8a3c7c139c3cd2065453ac5efd09685196edd15789eca66aaeeaf435df3028d77a0d55b522
+  languageName: node
+  linkType: hard
+
+"@jay.kou/slate@workspace:*, @jay.kou/slate@workspace:packages/slate":
   version: 0.0.0-use.local
   resolution: "@jay.kou/slate@workspace:packages/slate"
   dependencies:
@@ -11009,7 +11039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json5@npm:2.x":
+"json5@npm:2.x, json5@npm:^2.2.1":
   version: 2.2.1
   resolution: "json5@npm:2.2.1"
   bin:
@@ -15530,46 +15560,14 @@ resolve@^2.0.0-next.3:
   languageName: unknown
   linkType: soft
 
-"slate@npm:^0.78.0":
-  version: 0.78.0
-  resolution: "slate@npm:0.78.0"
+"slate@npm:^0.81.0":
+  version: 0.81.0
+  resolution: "slate@npm:0.81.0"
   dependencies:
-    "@babel/runtime": ^7.7.4
-    "@types/is-hotkey": ^0.1.1
-    "@types/jest": ^27.4.1
-    "@types/jsdom": ^16.2.14
-    "@types/lodash": ^4.14.149
-    "@types/react": ^16.9.13
-    "@types/react-dom": ^16.9.4
-    "@types/react-test-renderer": ^16.8.0
-    direction: ^1.0.3
-    is-hotkey: ^0.1.6
-    is-plain-object: ^5.0.0
-    lodash: ^4.17.4
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-    react-test-renderer: ">=16.8.0"
-    scroll-into-view-if-needed: ^2.2.20
-    slate: ^0.81.0
-    slate-hyperscript: ^0.77.0
-    source-map-loader: ^0.2.4
-    tiny-invariant: 1.0.6
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-    slate: ">=0.65.3"
-  languageName: unknown
-  linkType: soft
-
-"slate@^0.81.0, slate@workspace:*, slate@workspace:packages/slate":
-  version: 0.0.0-use.local
-  resolution: "slate@workspace:packages/slate"
-  dependencies:
-    "@babel/runtime": ^7.7.4
     immer: ^9.0.6
     is-plain-object: ^5.0.0
     tiny-warning: ^1.0.3
-  checksum: 203f1a0a09a877efc4ebb8e256368ee72f71b699be064cfb4cba0f396199ea3c28a7679363a9d2c2d58011b5685c8c20f57f38bce56dbe78835d402add27cc2b
+  checksum: 6c20dde53662239075915b3dd46cd809be3b90d7102d040222bc4f641dccd099219e7f817ab053c8d200810dac5eb5ddd3563eb79166323f4504238dc1dc9912
   languageName: node
   linkType: hard
 

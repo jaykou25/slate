@@ -1,7 +1,4 @@
 {
-  "rules": {
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off",
-    "import/no-unresolved": "off"
-  }
+  "extends": ["plugin:react/jsx-runtime"],
+  "rules": { "import/no-unresolved": "off" }
 }

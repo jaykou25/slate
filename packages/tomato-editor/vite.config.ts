@@ -18,13 +18,20 @@ export default defineConfig({
   build: {
     emptyOutDir: false,
     lib: {
+      alias: {
+        '@jay.kou/slate': path.resolve(__dirname, '../slate/src/index.ts'),
+        '@jay.kou/slate-react': path.resolve(
+          __dirname,
+          '../slate-react/src/index.ts'
+        ),
+      },
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'tomatoEditor',
       fileName: (format) => `tomato-editor.${format}.js`,
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
-      external: ['React', 'React-dom'],
+      external: ['react', 'react-dom'],
     },
   },
 })

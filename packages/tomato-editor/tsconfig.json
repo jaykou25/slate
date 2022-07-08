@@ -3,10 +3,12 @@
   "compilerOptions": {
     "target": "ES2019",
     "baseUrl": ".",
-    "jsx": "react",
+    "jsx": "preserve",
     "moduleResolution": "Node",
     "lib": ["ES2015", "dom"],
-    "paths": {},
+    "paths": {
+      // "@jay.kou/slate-react": ["../slate-react/src/index.ts"]
+    },
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "dist",
