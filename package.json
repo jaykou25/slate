@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "tomatoBuild": "cd ./packages/tomato-editor && yarn build",
+    "tomatoOpen": "cd ./packages/tomato-editor && yarn open",
     "tomatoPublish": "cd ./packages/tomato-editor && npm publish",
     "slateReactPublish": "cd ./packages/slate-react && npm publish",
     "build": "yarn build:rollup && yarn build:next",

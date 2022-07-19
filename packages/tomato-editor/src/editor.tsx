@@ -9,10 +9,10 @@ import '@jay.kou/tomato-editor-design/dist/style.css'
 export default function Editor(props: TomatoEditorType) {
   const [editor] = useState(() => withReact(createEditor()))
 
-  const { initialValue = [] } = props
+  const { initialValue = [], onChange } = props
 
   return (
-    <Slate value={initialValue} editor={editor}>
+    <Slate value={initialValue} editor={editor} onChange={onChange}>
       <EditorBody />
     </Slate>
   )

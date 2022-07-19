@@ -7,7 +7,7 @@ const initialValue = [
   {
     type: 'paragraph',
     children: [
-      { text: 'This is editable ' },
+      { text: 'This is editable ', id: 'jay' },
       { text: 'rich', bold: true },
       { text: ' text, ' },
       { text: 'much', italic: true },

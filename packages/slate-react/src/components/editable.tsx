@@ -9,7 +9,7 @@ import {
   Transforms,
   Path,
   RangeRef,
-} from 'slate'
+} from '../../../slate/src/index'
 import getDirection from 'direction'
 import debounce from 'lodash/debounce'
 import throttle from 'lodash/throttle'
